@@ -5,7 +5,7 @@
 //  akkor adja vissza az elmentett (cache-elt) változatot.
 // =====================================================
 
-const CACHE = "foodshare-v3"; // ha új fájl kerül a listába, növeld a számot
+const CACHE = "foodshare-v4"; // ha új fájl kerül a listába, növeld a számot
 
 const APP_FILES = [
   "./", "index.html", "style.css", "logo.svg", "manifest.json",
@@ -13,7 +13,7 @@ const APP_FILES = [
   "profile.js", "notify.js", "rating.js", "qrscan.js", "script.js",
   "cegeknek.html", "business.css", "business.js", "business-translations.js", "templates.js",
   "pricing.js", "diet.js", "demo.js", "cloud.js", "firebase-config.js",
-  "icons/icon-192.png", "icons/icon-512.png",
+  "icon-192.png", "icon-512.png", "admin-logo.svg", "admin-icon-180.png",
 ];
 
 // Telepítéskor elmentjük az alap fájlokat
