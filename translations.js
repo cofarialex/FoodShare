@@ -8,7 +8,7 @@ const TRANSLATIONS = {
   // ---------------- MAGYAR ----------------
   hu: {
     locale: "hu-HU",
-    pageTitle: "FoodShare – Mentsd meg az ételt!",
+    pageTitle: "FoodShare",
     navHow: "Hogyan működik?", navLockers: "Automaták", navDonations: "Adományok", navNew: "Új adomány", navSim: "Szimulátor",
     heroText: "Hűtött ételmentő automaták a városban –  Tedd be, amit nem eszel meg!",
     btnDonate: "Adományozok", btnFind: "Ételt keresek",
@@ -162,7 +162,7 @@ const TRANSLATIONS = {
   // ---------------- ENGLISH ----------------
   en: {
     locale: "en-GB",
-    pageTitle: "FoodShare – Rescue food!",
+    pageTitle: "FoodShare",
     navHow: "How it works", navLockers: "Lockers", navDonations: "Donations", navNew: "New donation", navSim: "Simulator",
     heroText: "Refrigerated food-rescue lockers around the city – like an EasyBox, but for food. Drop off what you won't eat, and someone else can pick it up with a code.",
     btnDonate: "Donate food", btnFind: "Find food",
@@ -297,7 +297,7 @@ const TRANSLATIONS = {
   // ---------------- ROMÂNĂ ----------------
   ro: {
     locale: "ro-RO",
-    pageTitle: "FoodShare – Salvează mâncarea!",
+    pageTitle: "FoodShare",
     navHow: "Cum funcționează?", navLockers: "Automate", navDonations: "Donații", navNew: "Donație nouă", navSim: "Simulator",
     heroText: "Automate frigorifice pentru salvarea alimentelor în oraș – ca un EasyBox, dar pentru mâncare. Lasă ce nu mănânci, iar altcineva o poate ridica cu un cod.",
     btnDonate: "Donez", btnFind: "Caut mâncare",
