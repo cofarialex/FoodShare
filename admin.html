@@ -6,7 +6,9 @@
   <title>FoodShare – Admin</title>
   <meta name="robots" content="noindex">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="icon" href="admin-logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/admin-icon-180.png">
+  <meta name="apple-mobile-web-app-title" content="FS Admin">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="admin.css">
   <script src="theme.js"></script>
@@ -16,7 +18,7 @@
   <!-- BEJELENTKEZÉS / JELSZÓ BEÁLLÍTÁS -->
   <div id="loginScreen" class="login-screen">
     <form id="loginForm" class="login-box">
-      <div class="logo"><img src="logo.svg" alt="" class="logo-img"><span>Food<b>Share</b></span></div>
+      <div class="logo"><img src="admin-logo.svg" alt="" class="logo-img"><span>Food<b>Share</b></span></div>
       <h2 id="loginTitle">Admin belépés</h2>
       <p id="loginText" class="muted"></p>
       <input id="adminEmail" type="email" placeholder="Admin e-mail" autocomplete="username" class="hidden">
@@ -31,7 +33,7 @@
   <!-- ADMIN FELÜLET (csak belépés után látszik) -->
   <div id="adminApp" class="hidden">
     <nav class="nav">
-      <div class="logo"><img src="logo.svg" alt="" class="logo-img"><span>Food<b>Share</b></span> <span class="admin-badge">ADMIN</span></div>
+      <div class="logo"><img src="admin-logo.svg" alt="" class="logo-img"><span>Food<b>Share</b></span> <span class="admin-badge">ADMIN</span></div>
       <div class="admin-tabs">
         <button data-tab="stats" class="active">📊 Statisztikák</button>
         <button data-tab="lockers">🧊 Automaták</button>
