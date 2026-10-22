@@ -1,0 +1,225 @@
+/*  Admin felület  */
+.admin-body { background: #f4f7f5; }
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+.error-text { color: #c0392b; min-height: 1.2em; text-align: center; }
+
+/*  Belépés  */
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: linear-gradient(180deg, var(--light), var(--bg));
+}
+.login-box {
+  background: var(--card);
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+.login-box input { padding: 11px; border: 1px solid #cfdcd5; border-radius: 8px; font-size: 1rem; }
+
+/*  Felső sáv  */
+.admin-badge {
+  background: var(--dark);
+  color: white;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+.admin-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+.admin-tabs button {
+  border: none;
+  background: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--dark);
+}
+.admin-tabs button:hover { background: var(--light); }
+.admin-tabs button.active { background: var(--green); color: white; }
+.btn-small { padding: 6px 12px; font-size: 0.85rem; }
+
+.admin-main { max-width: 1200px; margin: 0 auto; padding: 24px 16px; display: flex; flex-direction: column; gap: 20px; }
+.tab { display: flex; flex-direction: column; gap: 20px; }
+
+/*  Statisztika kártyák  */
+.kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
+.kpi {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.kpi span { display: block; color: var(--muted); font-size: 0.85rem; }
+.kpi strong { font-size: 1.8rem; color: var(--dark); }
+.kpi.good strong { color: var(--green); }
+.kpi.bad strong { color: #c0392b; }
+
+.admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.panel-box {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.panel-box h3 { margin-bottom: 14px; }
+
+/*  Sávdiagram sorok  */
+.bar-row { margin-bottom: 12px; }
+.bar-label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px; }
+.bar { height: 10px; background: #e8eeea; border-radius: 999px; overflow: hidden; display: flex; }
+.bar-saved { background: var(--green); }
+.bar-wasted { background: #e74c3c; }
+.bar-used { background: #2980b9; }
+.bar-legend { display: flex; gap: 14px; font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+.bar-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+
+/*  Táblázatok  */
+.table-wrap { overflow-x: auto; }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.admin-table th { text-align: left; color: var(--muted); font-weight: 600; padding: 8px; border-bottom: 2px solid #e8eeea; white-space: nowrap; }
+.admin-table td { padding: 8px; border-bottom: 1px solid #f0f3f1; vertical-align: middle; }
+.admin-table tr:hover td { background: #fafcfb; }
+.admin-table input[type="text"], .admin-table input[type="number"] {
+  padding: 6px;
+  border: 1px solid #cfdcd5;
+  border-radius: 6px;
+  width: 100%;
+  min-width: 70px;
+}
+.admin-table .actions-cell { white-space: nowrap; display: flex; gap: 6px; }
+.temp-bad { border-color: #c0392b !important; background: #fdf3f2; }
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.pill-waiting { background: #e3f0fa; color: #2980b9; }
+.pill-available { background: #e3f5ea; color: #1e8449; }
+.pill-reserved { background: #fdf0e3; color: #d35400; }
+.pill-collected { background: #eef0f1; color: #5d6d7e; }
+.pill-expired { background: #fdecea; color: #c0392b; }
+.pill-cleared { background: #f4f4f4; color: #95a5a6; }
+
+.toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+.toolbar h3 { margin: 0; }
+.toolbar-right { display: flex; gap: 8px; flex-wrap: wrap; }
+.toolbar select { padding: 7px; border: 1px solid #cfdcd5; border-radius: 6px; }
+
+/*  Űrlapok  */
+.admin-form { display: flex; flex-direction: column; gap: 12px; }
+.admin-form label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 0.9rem; }
+.admin-form input { padding: 9px; border: 1px solid #cfdcd5; border-radius: 8px; font-size: 0.95rem; font-weight: normal; }
+.two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.new-locker { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+#adminMap { height: 320px; border-radius: 10px; z-index: 0; }
+.danger-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+
+@media (max-width: 800px) {
+  .new-locker { grid-template-columns: 1fr; }
+  .nav { flex-wrap: wrap; gap: 10px; }
+}
+.login-box .logo { justify-content: center; }
+.thumb { width: 36px; height: 36px; object-fit: cover; border-radius: 6px; vertical-align: middle; margin-right: 8px; }
+
+/*  Sötét téma az adminban  */
+[data-theme="dark"] .admin-body { background: var(--bg); }
+[data-theme="dark"] .admin-table tr:hover td { background: #1f2c25; }
+[data-theme="dark"] .admin-table td { border-bottom-color: #26352d; }
+[data-theme="dark"] .admin-table th { border-bottom-color: #2c3d34; }
+[data-theme="dark"] .bar { background: #26352d; }
+
+/*  Visszajelzések  */
+.stars-cell { color: #f1c40f; white-space: nowrap; letter-spacing: 1px; }
+.problem-tag { display: inline-block; background: #fdecea; color: #c0392b; border-radius: 6px; padding: 1px 6px; font-size: 0.78rem; margin: 1px; }
+[data-theme="dark"] .problem-tag { background: #3a1f1c; color: #ff8a80; }
+.report-open td:first-child { border-left: 3px solid #e74c3c; }
+.theme-toggle-admin { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 4px 8px; cursor: pointer; }
+[data-theme="dark"] .admin-badge { background: var(--green); color: #0d1a12; }
+#openReports { background: #e74c3c !important; color: white !important; }
+#newLeads { background: #e74c3c !important; color: white !important; }
+
+/*  Automaták áthelyezése  */
+#lockerMap { height: 380px; border-radius: 10px; margin-bottom: 16px; z-index: 0; }
+.relocate-hint { background: var(--light); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; font-size: 0.92rem; }
+.active-pin { background: #f1c40f !important; border-color: #f1c40f !important; color: #4d3b00 !important; }
+.admin-table input[type="number"] { min-width: 90px; }
+
+/*  Éves jelentés  */
+.report-controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; margin-bottom: 8px; }
+.report-controls label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 0.9rem; }
+.report-controls label.inline { flex-direction: row; align-items: center; gap: 6px; font-weight: normal; }
+.report-controls select { padding: 7px; border: 1px solid var(--border); border-radius: 6px; }
+.report-sheet {
+  background: white;
+  color: #1e3a2f;
+  border-radius: 12px;
+  padding: 36px 40px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+.report-sheet h3 { margin: 26px 0 10px; font-size: 1.05rem; }
+.report-head { display: flex; gap: 16px; align-items: center; border-bottom: 3px solid #27ae60; padding-bottom: 14px; }
+.report-head img { width: 54px; height: 54px; }
+.report-head h2 { font-size: 1.35rem; }
+.report-head p { color: #6b7c74; }
+.report-meta { margin-top: 16px; border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+.report-meta th { text-align: left; width: 200px; color: #6b7c74; font-weight: 600; padding: 4px 0; }
+.report-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.report-kpis div { border: 1px solid #dfe8e3; border-radius: 8px; padding: 10px; }
+.report-kpis span { display: block; font-size: 0.78rem; color: #6b7c74; }
+.report-kpis strong { font-size: 1rem; }
+.report-measures { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.report-measures li.no { color: #95a5a6; }
+.report-verdict { margin-top: 10px; font-weight: 700; padding: 8px 12px; border-radius: 8px; }
+.report-verdict.ok { background: #e3f5ea; color: #1e8449; }
+.report-verdict.bad { background: #fdecea; color: #c0392b; }
+.report-table { font-size: 0.85rem; }
+.report-sheet .admin-table td, .report-sheet .admin-table th { color: #1e3a2f; border-bottom-color: #e5ece8; }
+.report-sheet .admin-table tr:hover td { background: transparent; }
+.report-note { margin-top: 20px; font-size: 0.78rem; color: #6b7c74; }
+.report-sign { display: flex; justify-content: space-between; margin-top: 40px; font-size: 0.9rem; gap: 20px; flex-wrap: wrap; }
+
+/* Nyomtatáskor csak a jelentés látszódjon */
+@media print {
+  body * { visibility: hidden; }
+  #reportSheet, #reportSheet * { visibility: visible; }
+  #reportSheet { position: absolute; left: 0; top: 0; box-shadow: none; padding: 0; max-width: none; }
+  @page { margin: 16mm; }
+}
+@media (max-width: 800px) { .report-kpis { grid-template-columns: 1fr 1fr; } .report-sheet { padding: 20px; } }
+
+/*  Szenzorok  */
+#hotLockers { background: #e74c3c !important; color: white !important; }
+.sensor-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 12px; }
+.sensor-card { border: 2px solid var(--light); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.sensor-card.hot { border-color: #e74c3c; background: rgba(231, 76, 60, 0.06); animation: pulse 1.5s infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.15); } }
+.sensor-top { display: flex; align-items: baseline; gap: 6px; }
+.sensor-temp { margin-left: auto; font-size: 1.5rem; font-weight: 800; color: var(--green); }
+.sensor-card.hot .sensor-temp { color: #e74c3c; }
+.sparkline { width: 100%; height: 70px; background: var(--light); border-radius: 8px; }
+.sensor-state { font-size: 0.88rem; font-weight: 600; }
+.sensor-affected { font-size: 0.85rem; color: #c0392b; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.sensor-log { list-style: none; display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow-y: auto; }
+.sensor-log li { padding: 6px 10px; border-radius: 6px; background: var(--light); font-size: 0.9rem; }
+.sensor-log li.bad { border-left: 3px solid #e74c3c; }
+.sensor-log li.good { border-left: 3px solid #27ae60; }

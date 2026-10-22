@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodShare</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <!-- Telepíthető app (PWA) -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#27ae60">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="business.css">
+  <!-- A téma már itt betöltődik, hogy ne villanjon fehéren -->
+  <script src="theme.js"></script>
+</head>
+<body>
+
+  <!-- NAVIGÁCIÓ -->
+  <!-- data-i18n="kulcs": ennek az elemnek a szövegét a JS cseréli a kiválasztott nyelvre -->
+  <nav class="nav">
+    <div class="logo"><img src="logo.svg" alt="" class="logo-img"><span>Food<b>Share</b></span></div>
+    <div class="nav-links">
+      <a href="#hogyan" data-i18n="navHow"></a>
+      <a href="#terkep" data-i18n="navLockers"></a>
+      <a href="#adomanyok" data-i18n="navDonations"></a>
+      <a href="#uj" data-i18n="navNew"></a>
+      <a href="#automata" data-i18n="navSim"></a>
+      <a href="#profil" data-i18n="navProfile"></a>
+      <a href="cegeknek.html" class="nav-business" data-i18n="navBusiness"></a>
+    </div>
+    <div class="nav-right">
+      <button id="installButton" class="btn btn-primary btn-small hidden" onclick="installApp()" data-i18n="install"></button>
+      <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()" title="🌙 / ☀️">🌙</button>
+      <div class="lang-switch">
+        <button data-lang="hu">HU</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="ro">RO</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO RÉSZ -->
+  <header class="hero">
+    <h1>Connect. Rescue. Nourish.</h1>
+    <p data-i18n="heroText"></p>
+    <div class="hero-buttons">
+      <a href="#uj" class="btn btn-primary" data-i18n="btnDonate"></a>
+      <a href="#adomanyok" class="btn btn-secondary" data-i18n="btnFind"></a>
+    </div>
+    <button type="button" class="demo-start" onclick="startDemo()" data-i18n="demoStart"></button>
+  </header>
+
+  <!-- HOGYAN MŰKÖDIK -->
+  <section id="hogyan" class="section">
+    <h2 data-i18n="howTitle"></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="icon">📦</div>
+        <h3 data-i18n="step1Title"></h3>
+        <p data-i18n="step1Text"></p>
+      </div>
+      <div class="step">
+        <div class="icon">🧊</div>
+        <h3 data-i18n="step2Title"></h3>
+        <p data-i18n="step2Text"></p>
+      </div>
+      <div class="step">
+        <div class="icon">🔑</div>
+        <h3 data-i18n="step3Title"></h3>
+        <p data-i18n="step3Text"></p>
+      </div>
+    </div>
+
+    <!-- Lejárati szabályok (a JS tölti fel) -->
+    <h3 class="rules-title" data-i18n="rulesTitle"></h3>
+    <div id="rulesTable" class="rules"></div>
+  </section>
+
+  <!-- STATISZTIKA (JS számolja) -->
+  <section class="stats">
+    <div><strong id="statAvailable">0</strong><span data-i18n="statAvailable"></span></div>
+    <div><strong id="statSaved">0</strong><span data-i18n="statSaved"></span></div>
+    <div><strong id="statFree">0</strong><span data-i18n="statFree"></span></div>
+  </section>
+
+  <!-- TÉRKÉP AZ AUTOMATÁKKAL -->
+  <section id="terkep" class="section">
+    <h2 data-i18n="lockersTitle"></h2>
+
+    <!-- Legközelebbi automata -->
+    <div class="nearest-bar">
+      <button type="button" class="btn btn-primary" onclick="findNearest()" data-i18n="nearestBtn"></button>
+      <button type="button" class="link-button" onclick="demoLocation()" data-i18n="nearestDemo"></button>
+      <p id="locationMessage" class="location-message"></p>
+    </div>
+    <div class="map-layout">
+      <div id="map"></div>
+      <div id="lockerList" class="locker-list"></div>
+    </div>
+  </section>
+
+  <!-- ADOMÁNYOK LISTÁJA -->
+  <section id="adomanyok" class="section">
+    <h2 data-i18n="donationsTitle"></h2>
+
+    <!-- Szűrők -->
+    <div class="filters">
+      <input id="searchInput" type="text" data-i18n-placeholder="searchPlaceholder">
+      <select id="categoryFilter"></select>
+      <select id="lockerFilter"></select>
+      <label class="checkbox">
+        <input id="onlyAvailable" type="checkbox" checked> <span data-i18n="onlyAvailable"></span>
+      </label>
+      <select id="priceFilter"></select>
+    </div>
+    <!-- Diéta / allergén szűrő gombok (a JS tölti fel) -->
+    <div id="dietFilter" class="diet-filters"></div>
+    <p class="diet-warning" data-i18n="dietWarning"></p>
+
+    <div id="donationList" class="cards"></div>
+  </section>
+
+  <!-- ÚJ ADOMÁNY ŰRLAP -->
+  <section id="uj" class="section">
+    <h2 data-i18n="newTitle"></h2>
+    <form id="donationForm" class="form">
+      <label><span data-i18n="fTitle"></span>
+        <input id="title" type="text" data-i18n-placeholder="fTitlePh" required>
+      </label>
+      <label><span data-i18n="fCategory"></span>
+        <select id="category" required></select>
+      </label>
+      <p id="categoryInfo" class="category-info"></p>
+      <label><span data-i18n="fLabelDate"></span>
+        <input id="labelDate" type="date">
+        <small data-i18n="fLabelHint"></small>
+      </label>
+      <label><span data-i18n="fPortions"></span>
+        <input id="portions" type="number" min="1" value="1" required>
+      </label>
+      <label><span data-i18n="fLocker"></span>
+        <select id="locker" required></select>
+      </label>
+      <label><span data-i18n="fDonor"></span>
+        <input id="donor" type="text" data-i18n-placeholder="fDonorPh" required>
+      </label>
+      <!-- Diéta / allergének -->
+      <fieldset class="fieldset">
+        <legend data-i18n="fDiet"></legend>
+        <div id="dietInputs" class="diet-inputs"></div>
+      </fieldset>
+
+      <!-- Ingyenes vagy kedvezményes -->
+      <fieldset class="fieldset">
+        <legend data-i18n="fOffer"></legend>
+        <label class="radio"><input type="radio" name="offerType" value="free" checked> <span data-i18n="fOfferFree"></span></label>
+        <label class="radio"><input type="radio" name="offerType" value="sale"> <span data-i18n="fOfferSale"></span></label>
+        <div id="saleFields" class="sale-fields hidden">
+          <label><span data-i18n="fOriginalPrice"></span>
+            <input id="originalPrice" type="number" min="1" step="0.5" placeholder="20">
+          </label>
+          <label><span data-i18n="fDiscount"></span>
+            <select id="discount"></select>
+          </label>
+        </div>
+        <p id="pricePreview" class="price-preview"></p>
+      </fieldset>
+
+      <label><span data-i18n="fPhoto"></span>
+        <input id="photo" type="file" accept="image/*">
+        <small data-i18n="fPhotoHint"></small>
+      </label>
+      <div id="photoPreview" class="photo-preview hidden"></div>
+      <button type="submit" class="btn btn-primary" data-i18n="fSubmit"></button>
+      <p id="formMessage" class="form-message"></p>
+    </form>
+  </section>
+
+  <!-- AUTOMATA SZIMULÁTOR -->
+  <section id="automata" class="section">
+    <h2 data-i18n="simTitle"></h2>
+    <p class="section-intro" data-i18n="simIntro"></p>
+
+    <div class="machine">
+      <!-- Bal oldal: kijelző + billentyűzet -->
+      <div class="machine-panel">
+        <select id="machineSelect"></select>
+        <div id="machineTemp" class="machine-temp"></div>
+        <div id="screen" class="screen"></div>
+        <div class="keypad" id="keypad"></div>
+        <!-- QR beolvasás -->
+        <div class="scan-buttons">
+          <button type="button" class="btn btn-primary" onclick="startScan()" data-i18n="scanCamera"></button>
+          <label class="btn btn-secondary file-button">
+            <span data-i18n="scanImage"></span>
+            <input id="qrImageInput" type="file" accept="image/*" hidden>
+          </label>
+        </div>
+        <div id="scanner" class="scanner hidden">
+          <video id="scanVideo" playsinline muted></video>
+          <div class="scan-frame"></div>
+          <button type="button" class="btn btn-danger btn-small" onclick="stopScan()" data-i18n="scanStop"></button>
+        </div>
+      </div>
+
+      <!-- Jobb oldal: a rekeszek -->
+      <div id="compartments" class="compartments"></div>
+    </div>
+
+    <div class="machine-legend">
+      <span><i class="c-free"></i><b data-i18n="legendFree"></b></span>
+      <span><i class="c-waiting"></i><b data-i18n="legendWaiting"></b></span>
+      <span><i class="c-full"></i><b data-i18n="legendFull"></b></span>
+      <span><i class="c-reserved"></i><b data-i18n="legendReserved"></b></span>
+      <span><i class="c-expired"></i><b data-i18n="legendExpired"></b></span>
+    </div>
+  </section>
+
+  <!-- PROFILOM -->
+  <section id="profil" class="section">
+    <h2 data-i18n="profileTitle"></h2>
+    <p class="section-intro" data-i18n="profileIntro"></p>
+
+    <form id="nicknameForm" class="nickname-form">
+      <input id="nickname" type="text" data-i18n-placeholder="nicknamePh">
+      <button type="submit" class="btn btn-secondary" data-i18n="save"></button>
+      <span id="nicknameMessage" class="form-message"></span>
+    </form>
+
+    <div id="impact" class="impact"></div>
+    <p class="impact-note" data-i18n="impactNote"></p>
+
+    <h3 class="profile-subtitle" data-i18n="notifTitle"></h3>
+    <div class="notif-box">
+      <p id="notifStatus"></p>
+      <div class="notif-buttons">
+        <button id="notifToggle" type="button" class="btn btn-primary" onclick="toggleNotifications()"></button>
+        <button type="button" class="btn btn-secondary" onclick="testNotification()" data-i18n="notifTest"></button>
+      </div>
+      <p class="muted small"><b data-i18n="favTitle"></b> <span data-i18n="favHint"></span></p>
+      <div id="favoriteList" class="chips"></div>
+    </div>
+
+    <h3 class="profile-subtitle" data-i18n="badgesTitle"></h3>
+    <div id="badges" class="badges"></div>
+
+    <div class="history">
+      <div>
+        <h3 class="profile-subtitle" data-i18n="historyDonations"></h3>
+        <ul id="historyDonations" class="history-list"></ul>
+      </div>
+      <div>
+        <h3 class="profile-subtitle" data-i18n="historyPickups"></h3>
+        <ul id="historyPickups" class="history-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- KÓD ABLAK (felugró) -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose">✕</button>
+      <h3 id="modalTitle"></h3>
+      <p id="modalText"></p>
+      <div id="modalCode" class="big-code"></div>
+      <div id="qrcode" class="qr"></div>
+      <p id="modalFoot" class="modal-foot"></p>
+      <button type="button" class="link-button" onclick="downloadQr()" data-i18n="downloadQr"></button>
+    </div>
+  </div>
+
+  <!-- FIZETÉS ABLAK (szimulált) -->
+  <div id="payModal" class="modal hidden">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closePayment()">✕</button>
+      <h3 data-i18n="payTitle"></h3>
+      <p id="payItem"></p>
+      <div id="payAmount" class="pay-amount"></div>
+      <p class="demo-note" data-i18n="payDemoNote"></p>
+      <button type="button" class="btn btn-primary" onclick="confirmPayment()" data-i18n="payButton"></button>
+    </div>
+  </div>
+
+  <!-- ÉRTÉKELÉS ABLAK -->
+  <div id="ratingModal" class="modal hidden">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeRating()">✕</button>
+      <h3 data-i18n="ratingTitle"></h3>
+      <p id="ratingFood"></p>
+      <div id="ratingStars" class="stars"></div>
+      <p class="rating-label" data-i18n="ratingProblemsTitle"></p>
+      <div id="ratingProblems" class="problems"></div>
+      <textarea id="ratingComment" rows="3" data-i18n-placeholder="ratingCommentPh"></textarea>
+      <button type="button" class="btn btn-primary" onclick="submitRating()" data-i18n="ratingSend"></button>
+      <p id="ratingMessage" class="error-text"></p>
+    </div>
+  </div>
+
+  <!-- BEMUTATÓ MÓD panel -->
+  <div id="demoPanel" class="demo-panel hidden"></div>
+
+  <!-- Felugró értesítések helye -->
+  <div id="toasts" class="toasts"></div>
+
+  <!-- CÉGEKNEK sáv -> átvisz a cegeknek.html oldalra -->
+  <section class="biz-banner">
+    <div>
+      <h3 data-i18n="bizBannerTitle"></h3>
+      <p data-i18n="bizBannerText"></p>
+    </div>
+    <a href="cegeknek.html" class="btn" data-i18n="bizBannerBtn"></a>
+  </section>
+
+  <footer class="footer"><span data-i18n="footer"></span> · <a href="cegeknek.html" data-i18n="navBusiness"></a></footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script src="translations.js"></script>
+  <script src="business-translations.js"></script>
+  <script src="data.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="cloud.js"></script>
+  <script src="location.js"></script>
+  <script src="photo.js"></script>
+  <script src="pricing.js"></script>
+  <script src="diet.js"></script>
+  <script src="profile.js"></script>
+  <script src="notify.js"></script>
+  <script src="rating.js"></script>
+  <script src="qrscan.js"></script>
+  <script src="pwa.js"></script>
+  <script src="demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

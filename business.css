@@ -1,0 +1,173 @@
+/*  "Cégeknek" oldal  */
+a.logo { text-decoration: none; }
+.biz-badge {
+  background: var(--dark);
+  color: var(--card);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-left: 2px;
+}
+.biz-hero { padding: 70px 20px; }
+.biz-hero h1 { max-width: 820px; margin: 14px auto; line-height: 1.2; }
+.pill-date {
+  display: inline-block;
+  background: #fdecea;
+  color: #c0392b;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 5px 14px;
+  border-radius: 999px;
+}
+[data-theme="dark"] .pill-date { background: #3a1f1c; color: #ff8a80; }
+.biz-alt { max-width: none; background: var(--light); }
+.biz-alt > * { max-width: 1000px; margin-left: auto; margin-right: auto; }
+
+/*  Kikre vonatkozik  */
+.who { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 26px; }
+.who span { background: var(--card); padding: 8px 16px; border-radius: 999px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
+
+/*  Szabály kártyák  */
+.rule-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+.rule-card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+.rule-card:first-child { grid-column: 1 / -1; }
+.rule-nr {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--green);
+  color: white;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 10px;
+}
+.rule-card p { color: var(--muted); margin-top: 6px; }
+.measures { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; margin-top: 12px; }
+.measures li { background: var(--light); padding: 10px 12px; border-radius: 8px; }
+
+/*  Bírságok  */
+.fines {
+  margin-top: 20px;
+  background: var(--card);
+  border: 2px solid #f5b7b1;
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.fines h3 { margin-bottom: 10px; }
+.fine-row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--light); flex-wrap: wrap; }
+.fine-row strong { color: #c0392b; white-space: nowrap; }
+[data-theme="dark"] .fines { border-color: #6b2b25; }
+[data-theme="dark"] .fine-row strong { color: #ff8a80; }
+
+.disclaimer { margin-top: 16px; font-size: 0.85rem; color: var(--muted); }
+.disclaimer a { color: var(--green); }
+.disclaimer.center { text-align: center; }
+
+/*  Hogyan segítünk táblázat  */
+.help-table { background: var(--card); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+.help-row { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; padding: 14px 18px; border-top: 1px solid var(--light); }
+.help-row > span:first-child { font-weight: 600; }
+.help-head { background: var(--green); color: white; font-weight: 700; border-top: none; }
+.biz-benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+.biz-benefits div { background: var(--card); border-radius: 12px; padding: 18px; text-align: center; }
+.biz-benefits span { font-size: 2rem; display: block; margin-bottom: 6px; }
+.biz-benefits p { color: var(--muted); margin-top: 4px; font-size: 0.92rem; }
+
+/*  Önellenőrzés  */
+.check-box { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; align-items: start; }
+.check-list { display: flex; flex-direction: column; gap: 8px; }
+.check-item {
+  display: flex; gap: 12px; align-items: center;
+  background: var(--card);
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.check-item.on { border-color: var(--green); }
+.check-item input { width: 18px; height: 18px; accent-color: var(--green); }
+.score { background: var(--card); border-radius: 12px; padding: 22px; text-align: center; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.score-ring {
+  --p: 0;
+  width: 130px; height: 130px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 1.2rem;
+  background: conic-gradient(var(--ring) calc(var(--p) * 1%), var(--light) 0);  /* "tortadiagram" gyűrű */
+  position: relative;
+}
+.score-ring::before { content: ""; position: absolute; inset: 12px; background: var(--card); border-radius: 50%; }
+.score-ring span { position: relative; }
+.score-good { --ring: #27ae60; }
+.score-mid { --ring: #f39c12; }
+.score-bad { --ring: #e74c3c; }
+
+/*  Csomagok  */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+.plan {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex; flex-direction: column; gap: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+.plan.featured { border: 2px solid var(--green); transform: translateY(-6px); }
+.plan-tag {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--green); color: white;
+  font-size: 0.75rem; font-weight: 700;
+  padding: 3px 12px; border-radius: 999px; white-space: nowrap;
+}
+.price { font-size: 1.5rem; font-weight: 800; color: var(--green); }
+.plan ul { list-style: none; display: flex; flex-direction: column; gap: 8px; flex: 1; color: var(--dark); font-size: 0.93rem; }
+.plan .btn { text-align: center; margin-left: 0; }
+
+/*  Űrlap  */
+.form textarea { padding: 10px; border: 1px solid var(--border); border-radius: 8px; font: inherit; resize: vertical; }
+.consent { flex-direction: row !important; align-items: flex-start; font-weight: normal !important; font-size: 0.88rem; gap: 8px !important; }
+.consent input { margin-top: 3px; }
+
+/*  GYIK  */
+.faq { display: flex; flex-direction: column; gap: 10px; max-width: 760px; margin: 0 auto; }
+.faq details { background: var(--card); border-radius: 10px; padding: 14px 18px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); }
+.faq summary { font-weight: 600; cursor: pointer; }
+.faq p { color: var(--muted); margin-top: 8px; }
+
+@media (max-width: 800px) {
+  .check-box, .plans, .biz-benefits { grid-template-columns: 1fr; }
+  .help-row { grid-template-columns: 1fr; gap: 4px; }
+  .plan.featured { transform: none; }
+}
+
+/*  Főoldali "Cégeknek" sáv (az index.html-en is ez a fájl töltődik be)  */
+.biz-banner {
+  max-width: 1000px;
+  margin: 20px auto 50px;
+  padding: 26px 28px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #1e3a2f, #27ae60);
+  color: white;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+}
+.biz-banner h3 { margin-bottom: 6px; }
+.biz-banner p { opacity: 0.9; max-width: 620px; }
+.biz-banner .btn { background: white; color: #1e3a2f; font-weight: 700; white-space: nowrap; }
+.nav-links a.nav-business { color: var(--green); font-weight: 700; }
+@media (max-width: 1040px) { .biz-banner { margin-left: 16px; margin-right: 16px; } }
+.footer a { color: var(--green); }
+
+/*  Sablonok  */
+.templates { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.template-card { background: var(--card); border-radius: 12px; padding: 22px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; gap: 10px; }
+.template-card p { color: var(--muted); flex: 1; }
+.template-card .btn { align-self: flex-start; margin-left: 0; }
+.template-icon { font-size: 2rem; }
+@media (max-width: 800px) { .templates { grid-template-columns: 1fr; } }

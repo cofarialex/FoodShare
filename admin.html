@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodShare – Admin</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+  <script src="theme.js"></script>
+</head>
+<body class="admin-body">
+
+  <!-- BEJELENTKEZÉS / JELSZÓ BEÁLLÍTÁS -->
+  <div id="loginScreen" class="login-screen">
+    <form id="loginForm" class="login-box">
+      <div class="logo"><img src="logo.svg" alt="" class="logo-img"><span>Food<b>Share</b></span></div>
+      <h2 id="loginTitle">Admin belépés</h2>
+      <p id="loginText" class="muted"></p>
+      <input id="adminEmail" type="email" placeholder="Admin e-mail" autocomplete="username" class="hidden">
+      <input id="password" type="password" placeholder="Jelszó" autocomplete="current-password" required>
+      <input id="password2" type="password" placeholder="Jelszó még egyszer" autocomplete="new-password" class="hidden">
+      <button type="submit" class="btn btn-primary" id="loginButton">Belépés</button>
+      <p id="loginError" class="error-text"></p>
+      <a href="index.html" class="muted small">← Vissza a főoldalra</a>
+    </form>
+  </div>
+
+  <!-- ADMIN FELÜLET (csak belépés után látszik) -->
+  <div id="adminApp" class="hidden">
+    <nav class="nav">
+      <div class="logo"><img src="logo.svg" alt="" class="logo-img"><span>Food<b>Share</b></span> <span class="admin-badge">ADMIN</span></div>
+      <div class="admin-tabs">
+        <button data-tab="stats" class="active">📊 Statisztikák</button>
+        <button data-tab="lockers">🧊 Automaták</button>
+        <button data-tab="sensors">🌡️ Szenzorok <span id="hotLockers" class="admin-badge hidden"></span></button>
+        <button data-tab="donations">📦 Adományok</button>
+        <button data-tab="feedback">⭐ Visszajelzések <span id="openReports" class="admin-badge hidden"></span></button>
+        <button data-tab="report">📑 Éves jelentés</button>
+        <button data-tab="leads">🏢 Érdeklődők <span id="newLeads" class="admin-badge hidden"></span></button>
+        <button data-tab="settings">⚙️ Beállítások</button>
+      </div>
+      <div>
+        <button id="themeToggle" class="theme-toggle-admin" onclick="toggleTheme()">🌙</button>
+        <a href="index.html" target="_blank" class="btn btn-secondary btn-small">Főoldal ↗</a>
+        <button id="logoutButton" class="btn btn-danger btn-small">Kijelentkezés</button>
+      </div>
+    </nav>
+
+    <main class="admin-main">
+
+      <!-- STATISZTIKÁK -->
+      <section id="tab-stats" class="tab">
+        <div id="kpis" class="kpis"></div>
+        <div class="admin-grid">
+          <div class="panel-box">
+            <h3>Kategóriánként</h3>
+            <div id="categoryStats"></div>
+          </div>
+          <div class="panel-box">
+            <h3>Automaták kihasználtsága</h3>
+            <div id="lockerStats"></div>
+          </div>
+          <div class="panel-box">
+            <h3>Legaktívabb adományozók</h3>
+            <div id="donorStats"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AUTOMATÁK -->
+      <section id="tab-lockers" class="tab hidden">
+        <div class="panel-box">
+          <h3>Automaták kezelése</h3>
+          <!-- Áthelyezés: húzd a jelölőt, vagy válassz egy automatát (📍) és kattints a térképre -->
+          <div id="relocateHint" class="relocate-hint">🖐️ A jelölőket <b>áthúzhatod</b> a pontos helyükre, vagy a táblázatban a 📍 gomb után kattints a térképre.</div>
+          <div id="lockerMap"></div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr><th>ID</th><th>Név</th><th>Cím</th><th>Szélesség (lat)</th><th>Hosszúság (lon)</th><th>Hőmérséklet (°C)</th><th>Karbantartás</th><th>Rekeszek</th><th>Foglaltság</th><th></th></tr>
+              </thead>
+              <tbody id="lockerTable"></tbody>
+            </table>
+          </div>
+          <p class="muted small">8 °C fölött az automata automatikusan zárolódik. Karbantartás alatt sem lehet betölteni vagy átvenni.</p>
+        </div>
+
+        <div class="panel-box">
+          <h3>➕ Új automata felvétele</h3>
+          <div class="new-locker">
+            <form id="newLockerForm" class="admin-form">
+              <label>Név <input id="nlName" type="text" placeholder="pl. Színház tér" required></label>
+              <label>Cím <input id="nlAddress" type="text" placeholder="pl. Piața Teatrului 1" required></label>
+              <div class="two-cols">
+                <label>Szélesség (lat) <input id="nlLat" type="number" step="0.0001" required></label>
+                <label>Hosszúság (lon) <input id="nlLon" type="number" step="0.0001" required></label>
+              </div>
+              <div class="two-cols">
+                <label>Rekeszek száma <input id="nlSize" type="number" min="1" max="24" value="6" required></label>
+                <label>Hőmérséklet (°C) <input id="nlTemp" type="number" step="0.1" value="4" required></label>
+              </div>
+              <button type="submit" class="btn btn-primary">Automata hozzáadása</button>
+              <p id="nlMessage" class="form-message"></p>
+            </form>
+            <div>
+              <div id="adminMap"></div>
+              <p class="muted small">👆 Kattints a térképre, és a koordináták maguktól kitöltődnek.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ADOMÁNYOK -->
+      <section id="tab-donations" class="tab hidden">
+        <div class="panel-box">
+          <div class="toolbar">
+            <h3>Összes adomány</h3>
+            <div class="toolbar-right">
+              <select id="statusFilter"></select>
+              <select id="adminLockerFilter"></select>
+              <button id="clearAllExpired" class="btn btn-secondary btn-small">Lejártak kiürítése</button>
+              <button id="exportLog" class="btn btn-primary btn-small">⬇️ Átadási napló (CSV)</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Feltöltve</th><th>Étel</th><th>Kategória</th><th>Hely</th><th>Adag</th><th>Adományozó</th><th>Állapot</th><th>Lejárat</th><th></th></tr>
+              </thead>
+              <tbody id="donationTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VISSZAJELZÉSEK -->
+      <section id="tab-feedback" class="tab hidden">
+        <div id="feedbackKpis" class="kpis"></div>
+        <div class="panel-box">
+          <div class="toolbar">
+            <h3>Értékelések és hibabejelentések</h3>
+            <div class="toolbar-right">
+              <select id="feedbackFilter">
+                <option value="open">Csak a megoldatlan problémák</option>
+                <option value="problems">Minden probléma</option>
+                <option value="all">Minden értékelés</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Mikor</th><th>Étel</th><th>Adományozó</th><th>Automata</th><th>Értékelés</th><th>Probléma</th><th>Megjegyzés</th><th></th></tr>
+              </thead>
+              <tbody id="feedbackTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SZENZOROK (szimuláció) -->
+      <section id="tab-sensors" class="tab hidden">
+        <div class="panel-box">
+          <div class="toolbar">
+            <h3>🌡️ Hűtők hőmérséklete – élő</h3>
+            <div class="toolbar-right">
+              <span id="sensorStatus" class="muted small"></span>
+              <button id="sensorToggle" class="btn btn-primary btn-small"></button>
+            </div>
+          </div>
+          <p class="muted small">Szimuláció: minden automatában egy hőmérő 3 másodpercenként mér. A piros szaggatott vonal a 8 °C-os határ – e fölött az automata magától zárolódik, és a főoldalon sem lehet használni.</p>
+          <div id="sensorCards" class="sensor-cards"></div>
+        </div>
+        <div class="panel-box">
+          <h3>🔔 Riasztások és események</h3>
+          <ul id="sensorLog" class="sensor-log"></ul>
+        </div>
+      </section>
+
+      <!-- ÉVES JELENTÉS -->
+      <section id="tab-report" class="tab hidden">
+        <div class="panel-box no-print">
+          <div class="toolbar">
+            <h3>Éves jelentés készítése</h3>
+            <button class="btn btn-primary btn-small" onclick="window.print()">🖨️ Nyomtatás / PDF</button>
+          </div>
+          <div class="report-controls">
+            <label>Adományozó <select id="reportDonor"></select></label>
+            <label>Év <select id="reportYear"></select></label>
+            <label class="inline"><input id="reportPrevention" type="checkbox" checked> Van belső felelős / megelőzési terv</label>
+            <label class="inline"><input id="reportOther" type="checkbox"> Egyéb hasznosítás is történt (komposzt, takarmány)</label>
+          </div>
+          <p class="muted small">Tipp: a nyomtatási ablakban válaszd a „Mentés PDF-ként” lehetőséget.</p>
+        </div>
+        <div id="reportSheet" class="report-sheet"></div>
+      </section>
+
+      <!-- ÉRDEKLŐDŐ CÉGEK (a cegeknek.html űrlapjáról) -->
+      <section id="tab-leads" class="tab hidden">
+        <div id="leadKpis" class="kpis"></div>
+        <div class="panel-box">
+          <div class="toolbar">
+            <h3>Érdeklődő cégek</h3>
+            <div class="toolbar-right">
+              <a href="cegeknek.html" target="_blank" class="btn btn-secondary btn-small">Cégeknek oldal ↗</a>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Mikor</th><th>Cég</th><th>Tevékenység</th><th>Város</th><th>Csomag</th><th>Kapcsolattartó</th><th>Önellenőrzés</th><th>Üzenet</th><th>Állapot</th><th></th></tr>
+              </thead>
+              <tbody id="leadTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- BEÁLLÍTÁSOK -->
+      <section id="tab-settings" class="tab hidden">
+        <div class="admin-grid">
+          <div class="panel-box">
+            <h3>🔑 Jelszó módosítása</h3>
+            <form id="passwordForm" class="admin-form">
+              <label>Jelenlegi jelszó <input id="oldPassword" type="password" autocomplete="current-password" required></label>
+              <label>Új jelszó <input id="newPassword" type="password" autocomplete="new-password" required></label>
+              <label>Új jelszó még egyszer <input id="newPassword2" type="password" autocomplete="new-password" required></label>
+              <button type="submit" class="btn btn-primary">Mentés</button>
+              <p id="passwordMessage" class="form-message"></p>
+            </form>
+          </div>
+          <div class="panel-box">
+            <h3>🗄️ Adatok</h3>
+            <p class="muted">visszaállít a kiinduló állapotot.</p>
+            <div class="danger-buttons">
+              <button id="resetSample" class="btn btn-secondary">Mintaadatok visszaállítása</button>
+              <button id="resetLockers" class="btn btn-secondary">Automaták visszaállítása alapra</button>
+              <button id="deleteAll" class="btn btn-danger">Minden adomány törlése</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="translations.js"></script>
+  <script src="business-translations.js"></script>
+  <script src="data.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="cloud.js"></script>
+  <script src="admin.js"></script>
+  <script src="report.js"></script>
+  <script src="sensors.js"></script>
+</body>
+</html>

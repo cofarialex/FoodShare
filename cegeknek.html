@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodShare – Cégeknek</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#27ae60">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="business.css">
+  <script src="theme.js"></script>
+</head>
+<body>
+
+  <!-- NAVIGÁCIÓ -->
+  <nav class="nav">
+    <a href="index.html" class="logo"><img src="logo.svg" alt="" class="logo-img"><span>Food<b>Share</b></span>
+      <span class="biz-badge" data-i18n="bizBadge"></span></a>
+    <div class="nav-links">
+      <a href="#szabalyok" data-i18n="bNavRules"></a>
+      <a href="#segitseg" data-i18n="bNavHelp"></a>
+      <a href="#ellenorzes" data-i18n="bNavCheck"></a>
+      <a href="#sablonok" data-i18n="bNavTemplates"></a>
+      <a href="#arak" data-i18n="bNavPricing"></a>
+      <a href="#kapcsolat" data-i18n="bNavContact"></a>
+    </div>
+    <div class="nav-right">
+      <a href="index.html" class="btn btn-secondary btn-small" data-i18n="bBackToApp"></a>
+      <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()">🌙</button>
+      <div class="lang-switch">
+        <button data-lang="hu">HU</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="ro">RO</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero biz-hero">
+    <span class="pill-date" data-i18n="bHeroDate"></span>
+    <h1 data-i18n="bHeroTitle"></h1>
+    <p data-i18n="bHeroText"></p>
+    <div class="hero-buttons">
+      <a href="#ellenorzes" class="btn btn-primary" data-i18n="bHeroCheck"></a>
+      <a href="#kapcsolat" class="btn btn-secondary" data-i18n="bHeroContact"></a>
+    </div>
+  </header>
+
+  <!-- SZABÁLYOK -->
+  <section id="szabalyok" class="section">
+    <h2 data-i18n="bRulesTitle"></h2>
+    <p class="section-intro" data-i18n="bRulesIntro"></p>
+
+    <div class="who">
+      <span>🏭 <b data-i18n="bWho1"></b></span>
+      <span>🚚 <b data-i18n="bWho2"></b></span>
+      <span>🛒 <b data-i18n="bWho3"></b></span>
+      <span>🍽️ <b data-i18n="bWho4"></b></span>
+    </div>
+
+    <div class="rule-cards">
+      <div class="rule-card">
+        <div class="rule-nr">1</div>
+        <h3 data-i18n="bR1Title"></h3>
+        <p data-i18n="bR1Text"></p>
+        <ul class="measures">
+          <li>🎯 <span data-i18n="bM1"></span></li>
+          <li>🏷️ <span data-i18n="bM2"></span></li>
+          <li>🤝 <span data-i18n="bM3"></span></li>
+          <li>♻️ <span data-i18n="bM4"></span></li>
+        </ul>
+      </div>
+      <div class="rule-card">
+        <div class="rule-nr">2</div>
+        <h3 data-i18n="bR2Title"></h3>
+        <p data-i18n="bR2Text"></p>
+      </div>
+      <div class="rule-card">
+        <div class="rule-nr">3</div>
+        <h3 data-i18n="bR3Title"></h3>
+        <p data-i18n="bR3Text"></p>
+      </div>
+      <div class="rule-card">
+        <div class="rule-nr">4</div>
+        <h3 data-i18n="bR4Title"></h3>
+        <p data-i18n="bR4Text"></p>
+      </div>
+      <div class="rule-card">
+        <div class="rule-nr">5</div>
+        <h3 data-i18n="bR5Title"></h3>
+        <p data-i18n="bR5Text"></p>
+      </div>
+    </div>
+
+    <!-- Bírságok -->
+    <div class="fines">
+      <h3 data-i18n="bFinesTitle"></h3>
+      <div class="fine-row"><span data-i18n="bFine1"></span><strong>10 000 – 20 000 lei</strong></div>
+      <div class="fine-row"><span data-i18n="bFine2"></span><strong>10 000 – 40 000 lei</strong></div>
+    </div>
+
+    <p class="disclaimer">
+      ⚖️ <span data-i18n="bDisclaimer"></span>
+      <a href="https://www.capital.ro/romania-schimba-regulile-impotriva-risipei-alimentare-masurile-intra-in-vigoare-de-azi-1-aprilie-obligatii-pentru-comercianti-producatori-si-horeca.html" target="_blank" data-i18n="bSource"></a>
+    </p>
+  </section>
+
+  <!-- HOGYAN SEGÍT A FOODSHARE -->
+  <section id="segitseg" class="section biz-alt">
+    <h2 data-i18n="bHelpTitle"></h2>
+    <div class="help-table">
+      <div class="help-row help-head"><span data-i18n="bHelpColRule"></span><span data-i18n="bHelpColHow"></span></div>
+      <div class="help-row"><span data-i18n="bH1Rule"></span><span>✅ <span data-i18n="bH1How"></span></span></div>
+      <div class="help-row"><span data-i18n="bH2Rule"></span><span>✅ <span data-i18n="bH2How"></span></span></div>
+      <div class="help-row"><span data-i18n="bH3Rule"></span><span>✅ <span data-i18n="bH3How"></span></span></div>
+      <div class="help-row"><span data-i18n="bH4Rule"></span><span>✅ <span data-i18n="bH4How"></span></span></div>
+      <div class="help-row"><span data-i18n="bH5Rule"></span><span>✅ <span data-i18n="bH5How"></span></span></div>
+    </div>
+
+    <div class="biz-benefits">
+      <div><span>💸</span><b data-i18n="bBen1Title"></b><p data-i18n="bBen1Text"></p></div>
+      <div><span>⏱️</span><b data-i18n="bBen2Title"></b><p data-i18n="bBen2Text"></p></div>
+      <div><span>💚</span><b data-i18n="bBen3Title"></b><p data-i18n="bBen3Text"></p></div>
+    </div>
+  </section>
+
+  <!-- SABLONOK -->
+  <section id="sablonok" class="section">
+    <h2 data-i18n="bTplTitle"></h2>
+    <p class="section-intro" data-i18n="bTplIntro"></p>
+    <div class="templates">
+      <div class="template-card">
+        <span class="template-icon">📋</span>
+        <h3 data-i18n="bTpl1"></h3>
+        <p data-i18n="bTpl1Text"></p>
+        <button class="btn btn-primary" onclick="downloadTemplate('procedure')" data-i18n="bTplDownload"></button>
+      </div>
+      <div class="template-card">
+        <span class="template-icon">🤝</span>
+        <h3 data-i18n="bTpl2"></h3>
+        <p data-i18n="bTpl2Text"></p>
+        <button class="btn btn-primary" onclick="downloadTemplate('contract')" data-i18n="bTplDownload"></button>
+      </div>
+    </div>
+    <p class="disclaimer center" data-i18n="bTplNote"></p>
+  </section>
+
+  <!-- ÖNELLENŐRZÉS -->
+  <section id="ellenorzes" class="section">
+    <h2 data-i18n="bCheckTitle"></h2>
+    <p class="section-intro" data-i18n="bCheckIntro"></p>
+    <div class="check-box">
+      <div id="checkList" class="check-list"></div>
+      <div id="checkResult" class="check-result"></div>
+    </div>
+  </section>
+
+  <!-- ÁRAK -->
+  <section id="arak" class="section biz-alt">
+    <h2 data-i18n="bPricingTitle"></h2>
+    <p class="section-intro" data-i18n="bPricingIntro"></p>
+    <div class="plans">
+      <div class="plan">
+        <h3 data-i18n="bP1Name"></h3>
+        <div class="price"><span data-i18n="bP1Price"></span></div>
+        <ul>
+          <li data-i18n="bP1F1"></li>
+          <li data-i18n="bP1F2"></li>
+          <li data-i18n="bP1F3"></li>
+        </ul>
+        <a href="#kapcsolat" class="btn btn-secondary" onclick="choosePlan('basic')" data-i18n="bChoose"></a>
+      </div>
+      <div class="plan featured">
+        <span class="plan-tag" data-i18n="bPopular"></span>
+        <h3 data-i18n="bP2Name"></h3>
+        <div class="price"><span data-i18n="bP2Price"></span></div>
+        <ul>
+          <li data-i18n="bP2F1"></li>
+          <li data-i18n="bP2F2"></li>
+          <li data-i18n="bP2F3"></li>
+          <li data-i18n="bP2F4"></li>
+        </ul>
+        <a href="#kapcsolat" class="btn btn-primary" onclick="choosePlan('pro')" data-i18n="bChoose"></a>
+      </div>
+      <div class="plan">
+        <h3 data-i18n="bP3Name"></h3>
+        <div class="price"><span data-i18n="bP3Price"></span></div>
+        <ul>
+          <li data-i18n="bP3F1"></li>
+          <li data-i18n="bP3F2"></li>
+          <li data-i18n="bP3F3"></li>
+        </ul>
+        <a href="#kapcsolat" class="btn btn-secondary" onclick="choosePlan('chain')" data-i18n="bChoose"></a>
+      </div>
+    </div>
+    <p class="disclaimer center" data-i18n="bPricingNote"></p>
+  </section>
+
+  <!-- KAPCSOLAT -->
+  <section id="kapcsolat" class="section">
+    <h2 data-i18n="bContactTitle"></h2>
+    <p class="section-intro" data-i18n="bContactIntro"></p>
+    <form id="leadForm" class="form">
+      <label><span data-i18n="bFCompany"></span><input id="lCompany" type="text" required></label>
+      <label><span data-i18n="bFType"></span><select id="lType" required></select></label>
+      <label><span data-i18n="bFCity"></span><input id="lCity" type="text" value="Târgu Mureș" required></label>
+      <label><span data-i18n="bFPlan"></span><select id="lPlan"></select></label>
+      <label><span data-i18n="bFName"></span><input id="lName" type="text" required></label>
+      <label><span data-i18n="bFEmail"></span><input id="lEmail" type="email" required></label>
+      <label><span data-i18n="bFPhone"></span><input id="lPhone" type="tel"></label>
+      <label><span data-i18n="bFMessage"></span><textarea id="lMessage" rows="3"></textarea></label>
+      <label class="consent"><input id="lConsent" type="checkbox" required> <span data-i18n="bFConsent"></span></label>
+      <button type="submit" class="btn btn-primary" data-i18n="bFSend"></button>
+      <p id="leadMessage" class="form-message"></p>
+    </form>
+  </section>
+
+  <!-- GYIK -->
+  <section class="section">
+    <h2 data-i18n="bFaqTitle"></h2>
+    <div class="faq">
+      <details><summary data-i18n="bQ1"></summary><p data-i18n="bA1"></p></details>
+      <details><summary data-i18n="bQ2"></summary><p data-i18n="bA2"></p></details>
+      <details><summary data-i18n="bQ3"></summary><p data-i18n="bA3"></p></details>
+      <details><summary data-i18n="bQ4"></summary><p data-i18n="bA4"></p></details>
+    </div>
+  </section>
+
+  <footer class="footer" data-i18n="footer"></footer>
+
+  <script src="translations.js"></script>
+  <script src="business-translations.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="cloud.js"></script>
+  <script src="templates.js"></script>
+  <script src="business.js"></script>
+</body>
+</html>
