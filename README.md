@@ -1,0 +1,2 @@
+# FoodShare
+Hűtött automaták
