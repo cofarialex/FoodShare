@@ -103,7 +103,8 @@ function subscribeAppData() {
   if (typeof saveDonations !== "function") return; // pl. a Cégeknek oldalon nincs rá szükség
 
   subscribe("donations", (items) => {
-    donations = items;
+    // A Firestore id szerint (régi → új) adja vissza, mi viszont a legújabbat akarjuk elöl
+    donations = items.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
     localStorage.setItem(DONATIONS_KEY, JSON.stringify(donations)); // helyi másolat (gyors indulás)
     notifyListeners();
   });

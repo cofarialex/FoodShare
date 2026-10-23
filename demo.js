@@ -71,9 +71,12 @@ const DEMO_STEPS = [
   { // 4. Beküldés -> betöltő kód
     target: "#modal .modal-box",
     run: async () => {
+      lastSubmittedId = null;
       document.getElementById("donationForm").requestSubmit();
       await sleep(300);
-      demo.donationId = donations[0].id;
+      // Nem a lista első elemét vesszük (felhőből más sorrendben jöhet), hanem pont azt, amit most küldtünk be
+      if (!lastSubmittedId) throw new Error(document.getElementById("formMessage").textContent || t("demoNoLocker"));
+      demo.donationId = lastSubmittedId;
     },
   },
   { // 5. Betöltés az automatánál
@@ -81,6 +84,7 @@ const DEMO_STEPS = [
     run: async () => {
       closeModal();
       const d = demoDonation();
+      if (!d) throw new Error(t("demoNoLocker"));
       demoScroll("#automata");
       document.getElementById("machineSelect").value = d.lockerId;
       document.getElementById("machineSelect").dispatchEvent(new Event("change"));

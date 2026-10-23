@@ -372,6 +372,8 @@ function updateCategoryInfo() {
     t("ifLoadedNow", { time: formatTime(expiry) });
 }
 
+let lastSubmittedId = null; // az utoljára beküldött adomány (a bemutató mód használja)
+
 document.getElementById("donationForm").addEventListener("submit", (event) => {
   event.preventDefault();
   const message = document.getElementById("formMessage");
@@ -414,6 +416,7 @@ document.getElementById("donationForm").addEventListener("submit", (event) => {
     message.textContent = t("msgPhotoTooBig");
     return;
   }
+  lastSubmittedId = d.id;
   rememberDonated(d.id);
   clearPhoto();
   event.target.reset();
