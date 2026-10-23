@@ -1,7 +1,7 @@
 # 🥕 FoodShare – hűtött ételmentő automaták
 
-Egyetemi projekt (Dezvoltarea aplicațiilor web). Olyan, mint egy EasyBox, csak ételnek: az adományozó (bolt, étterem, magánszemély)
-betölti a felesleges ételt egy hűtött automatába, más pedig egy kóddal elviheti. Helyszín: Marosvásárhely.
+Egyetemi projekt . Olyan, mint egy EasyBox, csak ételnek: az adományozó (bolt, étterem, magánszemély)
+betölti a felesleges ételt egy hűtött automatába, más pedig egy kóddal elviheti.
 
 ## Funkciók
 **Felhasználóknak (`index.html`)**
